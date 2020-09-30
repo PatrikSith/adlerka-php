@@ -1,8 +1,35 @@
 <?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "sith";
+
+// Create connection
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+// Check connection
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+$sql = "SELECT * From rozvrh";
+$result = mysqli_query($conn, $sql);
+
+if (mysqli_num_rows($result) > 0) {
+    // output data of each row
+    while($row = mysqli_fetch_assoc($result)) {
+        $rozvrh[$row["den"]][$row["hodina"]]=$row["predmet"];
+    }
+} else {
+    echo "0 results";
+}
+
+mysqli_close($conn);
+?>
+<?php
 $dni = array("Pondelok", "Utorok", "Streda", "Štvrtok", "Piatok");
 $hodiny = array(0,1,2,3,4,5,6,7);
-$rozvrh[2][0] = "PFG";
-$rozvrh[2][1] = "PFG";
+//$rozvrh[3][3] = "PFG";
+//$rozvrh[4][3] = "PFG";
 ?>
     <table border="1">
         <tr>
@@ -64,7 +91,7 @@ $rozvrh[2][1] = "PFG";
 <table border="1">
     <tr>
         <td>&nbsp;</td>
-        <?php foreach($hodiny As $i=> $hodina):?>
+        <?php foreach($hodiny As $hodina):?>
             <td><?php echo $hodina; ?></td>
         <?php endforeach;?>
     </tr>
