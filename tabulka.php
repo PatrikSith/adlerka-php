@@ -11,7 +11,7 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-$sql = "SELECT * From rozvrh";
+$sql = "SELECT * From rozvrh WHERE trieda='3B'";
 $result = mysqli_query($conn, $sql);
 
 if (mysqli_num_rows($result) > 0) {
@@ -28,7 +28,7 @@ mysqli_close($conn);
 <?php
 $dni = array("Pondelok", "Utorok", "Streda", "Štvrtok", "Piatok");
 $hodiny = array(0,1,2,3,4,5,6,7);
-//$rozvrh[3][3] = "PFG";
+$rozvrh[4][7] = "NIČ";
 //$rozvrh[4][3] = "PFG";
 ?>
     <table border="1">
@@ -90,17 +90,18 @@ $hodiny = array(0,1,2,3,4,5,6,7);
 
 <table border="1">
     <tr>
-        <td>&nbsp;</td>
+        <td>Den</td>
         <?php foreach($hodiny As $hodina):?>
             <td><?php echo $hodina; ?></td>
         <?php endforeach;?>
     </tr>
     <?php foreach($dni As $i => $den):?>
         <tr>
-            <td> <?php echo $den;?></td>
+            <td> <?php echo $den;?> <?php echo$i;?></td>
             <?php foreach ($hodiny As $j => $hodina):?>
-                <td> <?php echo @$rozvrh[$i] [$j];?></td>
+                <td> <?php echo @$rozvrh[$i] [$j];?> <?php echo$j;?></td>
             <?php endforeach;?>
         </tr>
     <?php endforeach;?>
 </table>
+<?php echo "<pre>"; var_dump($rozvrh);?>
