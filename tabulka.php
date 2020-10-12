@@ -1,4 +1,22 @@
 <?php
+    session_start();
+?>
+<?php
+    if ($_SESSION["jazyk"])
+    {
+        $_SESSION["jazyk"]="sk";
+    }
+    if (!empty($_GET["jazyk"]))
+    {
+        $_SESSION["jazyk"]=$_GET["jazyk"];
+    }
+    var_dump($_SESSION["jazyk"]);
+?>
+
+<a href="tabulka.php?jazyk=sk">slovensky</a>
+<a href="tabulka.php?jazyk=en">anglicky</a>
+
+<?php
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -11,7 +29,15 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-$sql = "SELECT * From rozvrh WHERE trieda='3B'";
+if (!empty($_GET["trieda"]))
+    {
+        $where=" WHERE rozvrh.trieda='".$_GET["trieda"]."'";
+    }
+else
+    {
+        $where="";
+    }
+$sql = "SELECT * From rozvrh".$where;
 $result = mysqli_query($conn, $sql);
 
 if (mysqli_num_rows($result) > 0) {
@@ -23,7 +49,7 @@ if (mysqli_num_rows($result) > 0) {
     echo "0 results";
 }
 
-mysqli_close($conn);
+//mysqli_close($conn);
 ?>
 <?php
 $dni = array("Pondelok", "Utorok", "Streda", "Štvrtok", "Piatok");
@@ -105,3 +131,11 @@ $rozvrh[4][7] = "NIČ";
     <?php endforeach;?>
 </table>
 <?php echo "<pre>"; var_dump($rozvrh);?>
+<?php
+    $sql="SELECT trieda FROM rozvrh GROUP BY trieda ORDER BY trieda";
+    $result=mysqli_query($conn,$sql);
+    while ($row=mysqli_fetch_assoc($result))
+    {
+     echo "<a href=tabulka.php?trieda=".$row["trieda"].">".$row["trieda"]."</a><br>";
+    }
+?>
