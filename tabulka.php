@@ -1,6 +1,7 @@
 <?php
     session_start();
 ?>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- basic responzibilita -->
 <?php
     if ($_SESSION["jazyk"])
     {
@@ -57,6 +58,7 @@ $hodiny = array(0,1,2,3,4,5,6,7);
 $rozvrh[4][7] = "NIČ";
 //$rozvrh[4][3] = "PFG";
 ?>
+<!--
     <table border="1">
         <tr>
             <td></td>
@@ -113,7 +115,7 @@ $rozvrh[4][7] = "NIČ";
             <td></td>
         </tr>
     </table>
-
+-->
 <table border="1">
     <tr>
         <td>Den</td>
