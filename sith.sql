@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Oct 14, 2020 at 08:32 AM
+-- Generation Time: Oct 28, 2020 at 12:57 PM
 -- Server version: 5.7.31
 -- PHP Version: 7.3.21
 
@@ -24,13 +24,34 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `c_pohlavie`
+--
+
+DROP TABLE IF EXISTS `c_pohlavie`;
+CREATE TABLE IF NOT EXISTS `c_pohlavie` (
+  `id_c_pohlavie` int(3) NOT NULL AUTO_INCREMENT,
+  `nazovc_pohlavie` varchar(10) COLLATE utf8_slovak_ci NOT NULL,
+  PRIMARY KEY (`id_c_pohlavie`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_slovak_ci;
+
+--
+-- Dumping data for table `c_pohlavie`
+--
+
+INSERT INTO `c_pohlavie` (`id_c_pohlavie`, `nazovc_pohlavie`) VALUES
+(1, 'muž'),
+(2, 'žena');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `c_trieda`
 --
 
 DROP TABLE IF EXISTS `c_trieda`;
 CREATE TABLE IF NOT EXISTS `c_trieda` (
-  `idc_trieda` int(11) NOT NULL AUTO_INCREMENT,
-  `nazov_ctrieda` varchar(50) COLLATE utf8_slovak_ci NOT NULL,
+  `idc_trieda` int(3) NOT NULL AUTO_INCREMENT,
+  `nazovc_trieda` varchar(50) COLLATE utf8_slovak_ci NOT NULL,
   `skupina` int(1) NOT NULL,
   PRIMARY KEY (`idc_trieda`)
 ) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_slovak_ci;
@@ -39,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `c_trieda` (
 -- Dumping data for table `c_trieda`
 --
 
-INSERT INTO `c_trieda` (`idc_trieda`, `nazov_ctrieda`, `skupina`) VALUES
+INSERT INTO `c_trieda` (`idc_trieda`, `nazovc_trieda`, `skupina`) VALUES
 (1, '1B', 1),
 (2, '2B', 1),
 (3, '3B', 1),
@@ -112,9 +133,10 @@ DROP TABLE IF EXISTS `uzivatelia`;
 CREATE TABLE IF NOT EXISTS `uzivatelia` (
   `iduzivatelia` int(9) NOT NULL AUTO_INCREMENT,
   `meno` varchar(50) COLLATE utf8_slovak_ci NOT NULL,
-  `prezvisko` varchar(100) CHARACTER SET utf16 COLLATE utf16_slovak_ci NOT NULL,
+  `priezvisko` varchar(100) CHARACTER SET utf16 COLLATE utf16_slovak_ci NOT NULL,
   `datum_narodenia` date NOT NULL,
   `id_c_trieda` int(3) NOT NULL DEFAULT '0',
+  `id_c_pohlavie` int(3) NOT NULL,
   `logname` varchar(150) COLLATE utf8_slovak_ci NOT NULL,
   `password` varchar(100) COLLATE utf8_slovak_ci NOT NULL,
   PRIMARY KEY (`iduzivatelia`)
@@ -124,11 +146,11 @@ CREATE TABLE IF NOT EXISTS `uzivatelia` (
 -- Dumping data for table `uzivatelia`
 --
 
-INSERT INTO `uzivatelia` (`iduzivatelia`, `meno`, `prezvisko`, `datum_narodenia`, `id_c_trieda`, `logname`, `password`) VALUES
-(1, 'Patrik', 'Sith', '2020-09-04', 0, 'patrik.sith', '809ab99289d7a0818a7e291802f4d92e4f7f28ad'),
-(2, 'Jozko', 'Mrkva', '2010-06-05', 0, 'jozko.mrkva', 'ec11517587d6ed81047e524ce383c5a6d3c2d6f9'),
-(3, 'Fero', 'Ceruzka', '2020-05-08', 0, 'fero', '780c7888cbcbc01b3a3c0f3d3b507da1888ba2b5'),
-(4, 'Miso', 'Fixka', '2020-06-11', 0, 'miso', '7c4a8d09ca3762af61e59520943dc26494f8941b');
+INSERT INTO `uzivatelia` (`iduzivatelia`, `meno`, `priezvisko`, `datum_narodenia`, `id_c_trieda`, `id_c_pohlavie`, `logname`, `password`) VALUES
+(1, 'Patrik', 'Sith', '2020-09-04', 3, 1, 'patrik.sith', '809ab99289d7a0818a7e291802f4d92e4f7f28ad'),
+(2, 'Jozko', 'Mrkva', '2010-06-05', 1, 1, 'jozko.mrkva', 'ec11517587d6ed81047e524ce383c5a6d3c2d6f9'),
+(3, 'Fero', 'Ceruzka', '2020-05-08', 4, 1, 'fero.ceruzka', '780c7888cbcbc01b3a3c0f3d3b507da1888ba2b5'),
+(4, 'Katka', 'Fixková', '2020-06-11', 4, 2, 'katka.fixka', 'fbabf4a34e84e4dcfbba6c49cccd0d4341a275d6');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
